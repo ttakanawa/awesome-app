@@ -9,15 +9,18 @@ import {
   AsyncStorage,
   TextInput,
   NativeModules,
+  Dimensions
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import CountDown from './Counter';
+import Counter from './Counter';
 import ThemeContext from './ThemeContext';
 
-export default function Hello({children}) {
+// const {width, height} = Dimensions.get('window');
+
+export default function Hello() {
   const {theme} = useContext(ThemeContext);
   const [counterNames, setCounterNames] = useState([]); // カウンター名の配列
   const [text, setText] = useState('aiueo');
@@ -49,25 +52,24 @@ export default function Hello({children}) {
 
   return (
     <View style={[styles.container, styles[theme]]}>
-      <CountDown />
       <TextInput
-        style={styles.input}
-        onChangeText={setText}
+        style={{
+        width: Dimensions.get('window').width,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+      }}
+        onChangeText={(inputValue) => setText(inputValue)}
         value={text}
-        clearButtonMode="while-editing"
         onSubmitEditing={() => {
-          if (text.length) {
-            setCounterNames([...counterNames, text]);
-            setText('');
-          }
+          setCounterNames([...counterNames, text]);
+          setText('');
         }}
-        returnKeyType="done"
+        returnKeyType='done'
       />
-      {counterNames.map((counterName, index) => {
-        <View key={index}>
-          <Text>{counterName}</Text>
-        </View>
-      })}
+      {counterNames.map((counterName, index) => (
+        <Counter title={counterName} key={index} />
+      ))}
     </View>
   );
 }

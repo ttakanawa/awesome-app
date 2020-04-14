@@ -24,7 +24,6 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import CountDown from './Counter';
 import Hello from './Hello';
 import Profile from './Profile';
 import ThemeContext from './ThemeContext'
@@ -48,6 +47,7 @@ const App: () => React$Node = ({navigation}) => {
             )}
             <ThemeContext.Provider value={{theme: theme}}>
               <View style={styles.body}>
+              <Hello/>
                 <Button
                     title="切り替える！"
                     onPress={() => setTheme(theme === 'light' ? 'dark' : 'light')}
@@ -56,8 +56,6 @@ const App: () => React$Node = ({navigation}) => {
                     title="プロフィール"
                     onPress={() => navigation.navigate('Profile', {name: '！名前！'})}
                 />
-                <Hello/>
-
                 {/*<View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>

@@ -18,17 +18,24 @@ import {
 
 export default function Counter({title}) {
   const [count, setCount] = useState(0);
-  const [sec, setSec] = useState(60);
+  const [sec, setSec] = useState(10);
   // 左がプロパティ、右がセッター、useStateの引数がプロパティの初期値
 
   // renderが描画されたあと(コミットされたあと)
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setSec(s => (s ? s - 1 : 60));
+    const timerId = setInterval(() => {
+      setSec(s => {
+        if (s === 0) {
+          setCount(c => {
+            return Math.max(c - 1, 0);
+          });
+        }
+        return s ? s - 1 : 10;
+      });
     }, 1000);
-    return () => clearTimeout(timerId) ;
-  }, [sec]);
-  // return <Text style={{fontSize: 100, fontWeight: '900',}}>{sec}</Text>;
+    return () => clearInterval(timerId);
+  }, []);
+
   return (
     <View style={{
       flexDirection: 'row',
@@ -36,6 +43,7 @@ export default function Counter({title}) {
       marginVertical: 5,
     }}>
       <Text style={{flex: 2}}>{title}</Text>
+      <Text style={{flex: 1}}>{sec}</Text>
       <Text style={{flex: 1}}>{count}回</Text>
       <View style={{flex: 1, flexDirection: 'row'}}>
         <Button title=" ⚡️ " onPress={() => setCount(0)} />

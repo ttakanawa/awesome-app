@@ -17,6 +17,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Counter from './Counter';
 import ThemeContext from './ThemeContext';
+import CountDown from './CountDown'
 
 // const {width, height} = Dimensions.get('window');
 
@@ -52,6 +53,7 @@ export default function Hello() {
 
   return (
     <View style={[styles.container, styles[theme]]}>
+      <CountDown/>
       <TextInput
         style={{
         width: Dimensions.get('window').width,
